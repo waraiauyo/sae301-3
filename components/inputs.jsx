@@ -6,10 +6,12 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
 import {Form, FormControl, FormField, FormItem, FormMessage} from "@/components/ui/form";
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 
 const MasterSearchInput = forwardRef(({}, ref) => {
     const router = useRouter();
+    const params = useSearchParams();
+    const query = params.get("q");
 
     const formSchema = z.object({
         search: z.string({message: "Vous devez entrer un élément de recherche."}).min(1, {message: "Vous devez entrer un élément de recherche."}),
@@ -17,6 +19,9 @@ const MasterSearchInput = forwardRef(({}, ref) => {
 
     const form = useForm({
         resolver: zodResolver(formSchema),
+        defaultValues: {
+            search: query,
+        }
     });
 
     const onSubmit = (values) => router.push(`/search?q=${values.search}`);
@@ -31,7 +36,7 @@ const MasterSearchInput = forwardRef(({}, ref) => {
                         <FormItem className={"w-full"}>
                             <FormControl>
                                 <Input className={"h-10"} ref={ref} autoComplete={"off"}
-                                       placeholder={"Master sur Laval..."}
+                                       placeholder={"Entrez une ville"}
                                        {...field}
                                 />
                             </FormControl>
