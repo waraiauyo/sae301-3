@@ -25,9 +25,7 @@ const MasterSearchInput = forwardRef(({}, ref) => {
     });
 
     const onSubmit = (values) => router.push(`/search?q=${values.search}`);
-
-    //GROSSSE MERDE
-
+    
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className={"flex gap-2 w-full"}>
