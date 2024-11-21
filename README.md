@@ -5,9 +5,10 @@ Création d'un site qui permet aux étudiants, de trouver un master prêt de che
 ## Technologies
 
 **Client** : React, Tailwind, Rechart.
+
 **Serveur** : Node, NextJS, ( +Prisma pour la version finale ).
 
-## Installation
+## Installation local
 
 Cloner le répertoire ( actuellement la v1 ).
 
