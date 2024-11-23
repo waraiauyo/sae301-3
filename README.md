@@ -16,7 +16,7 @@ Cloner le répertoire ( actuellement la v1 ).
   git clone https://github.com/waraiauyo/sae301-3.git
 ```
 
-Ce déplacer à la racine du projet.
+Se déplacer à la racine du projet.
 
 ```bash
   cd sae301-3
