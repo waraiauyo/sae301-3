@@ -14,10 +14,8 @@ const HomePage = () => {
     );
 }
 
-const SearchPage = () => {
-    const params = useSearchParams();
-
-    const [search, setSearch] = useState(params.get("q")?.toString());
+const SearchPage = ({params}) => {
+    const [search, setSearch] = useState(params);
 
     const fetcher = (...args) => fetch(...args).then((res) => res.json());
     let {data: trainings} = useSWR("https://la-lab4ce.univ-lemans.fr/masters-stats/api/rest/formations", fetcher);
