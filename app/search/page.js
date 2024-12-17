@@ -1,5 +1,5 @@
 import {SearchPage} from "@/components/pages";
 
-export default function index() {
-    return <SearchPage/>;
+export default async function index({searchParams}) {
+    return <SearchPage params={searchParams.q}/>;
 }
