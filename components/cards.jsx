@@ -73,6 +73,6 @@ const TrainingCard = forwardRef(({training}, ref) => {
 });
 
 
-//je fais la page search
+
 
 export {TrainingsFilterCard, TrainingCard};
