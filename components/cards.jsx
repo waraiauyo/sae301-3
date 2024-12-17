@@ -10,10 +10,7 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {ArrowRight, Filter} from "lucide-react";
 
-const TrainingsFilterCard = forwardRef(({onFilter, trainings}, ref) => {
-    const [city, setCity] = useState();
-    const [alt, setAlt] = useState(true);
-
+const TrainingsFilterCard = forwardRef(({city, setCity, alt, setAlt, filter, trainings}, ref) => {
     const citys = getKeyFromObject(trainings, "ville");
 
     return (
@@ -50,7 +47,7 @@ const TrainingsFilterCard = forwardRef(({onFilter, trainings}, ref) => {
                 </div>
             </CardContent>
             <CardFooter>
-                <Button onClick={() => onFilter(city, alt)} className={"w-full"} size={"lg"}>Appliquer le filtre <Filter size={20}/></Button>
+                <Button onClick={filter} className={"w-full"} size={"lg"}>Appliquer le filtre <Filter size={20}/></Button>
             </CardFooter>
         </Card>
     );
@@ -64,10 +61,10 @@ const TrainingCard = forwardRef(({training}, ref) => {
                 <CardDescription>{training.lieux}</CardDescription>
             </CardHeader>
             <CardContent>
-                {training.alternance.toString()}
+
             </CardContent>
             <CardFooter className={"flex justify-end"}>
-                <Link href={"/?"}>
+                <Link href={`/training/${training.id}`}>
                     <Button>En savoir plus <ArrowRight size={20}/></Button>
                 </Link>
             </CardFooter>
