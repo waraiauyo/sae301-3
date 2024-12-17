@@ -1,5 +1,7 @@
 import {SearchPage} from "@/components/pages";
+import {getTrainings} from "@/lib/data";
 
 export default async function index({searchParams}) {
-    return <SearchPage params={searchParams.q}/>;
+    const trainings = await getTrainings();
+    return <SearchPage trainings={trainings} params={searchParams.q}/>;
 }
