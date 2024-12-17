@@ -8,7 +8,7 @@ import {Label} from "@/components/ui/label";
 import {firstLetterUppercase} from "@/lib/utils";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {Filter} from "lucide-react";
+import {ArrowRight, Filter} from "lucide-react";
 
 const TrainingsFilterCard = forwardRef(({trainings}, ref) => {
     const [city, setCity] = useState(null);
@@ -65,14 +65,11 @@ const TrainingCard = forwardRef(({training}, ref) => {
             <CardContent></CardContent>
             <CardFooter className={"flex justify-end"}>
                 <Link href={"/?"}>
-                    <Button>En savoir plus</Button>
+                    <Button>En savoir plus <ArrowRight size={20}/></Button>
                 </Link>
             </CardFooter>
         </Card>
     );
 });
-
-
-//je fais la page search
 
 export {TrainingsFilterCard, TrainingCard};
