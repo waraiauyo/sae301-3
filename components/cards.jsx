@@ -2,7 +2,7 @@
 
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select";
-import {forwardRef, useState} from "react";
+import {forwardRef, useRef, useState} from "react";
 import {getKeyFromObject} from "@/lib/filters";
 import {Label} from "@/components/ui/label";
 import {firstLetterUppercase} from "@/lib/utils";
@@ -10,13 +10,11 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {ArrowRight, Filter} from "lucide-react";
 
-const TrainingsFilterCard = forwardRef(({trainings}, ref) => {
-    const [city, setCity] = useState(null);
-    const [alt, setAlt] = useState(false);
+const TrainingsFilterCard = forwardRef(({city, setCity, alt, setAlt, filter, trainings}, ref) => {
     const citys = getKeyFromObject(trainings, "ville");
 
     return (
-        <Card ref={ref} className={"w-1/4 h-fit bg-gradient-to-t from-primary/5 to-ground to-20% sticky top-0"}>
+        <Card ref={ref} className={"w-1/4 h-fit bg-gradient-to-t from-primary/5 to-ground to-20% sticky top-[calc(68px+1.5rem)]"}>
             <CardHeader>
                 <CardTitle>Filtrer la recherche</CardTitle>
                 <CardDescription>Pour préciser les résultats</CardDescription>
@@ -24,7 +22,7 @@ const TrainingsFilterCard = forwardRef(({trainings}, ref) => {
             <CardContent className={"flex flex-col gap-4"}>
                 <div className={"flex flex-col justify-start gap-1"}>
                     <Label htmlFor={"select-city"}>Ville</Label>
-                    <Select>
+                    <Select value={city} onValueChange={(v) => setCity(v)}>
                         <SelectTrigger id={"select-city"}>
                             <SelectValue placeholder="Choisir une ville"/>
                         </SelectTrigger>
@@ -37,9 +35,9 @@ const TrainingsFilterCard = forwardRef(({trainings}, ref) => {
                 </div>
                 <div className={"flex flex-col justify-start gap-1"}>
                     <Label htmlFor={"select-city"}>Propose alternance</Label>
-                    <Select>
+                    <Select value={alt} onValueChange={(v) => setAlt(v)}>
                         <SelectTrigger id={"select-city"}>
-                            <SelectValue defaultValue={alt} placeholder="Choisir alternance"/>
+                            <SelectValue placeholder="Choisir alternance"/>
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value={true}>Oui</SelectItem>
@@ -49,7 +47,7 @@ const TrainingsFilterCard = forwardRef(({trainings}, ref) => {
                 </div>
             </CardContent>
             <CardFooter>
-                <Button className={"w-full"} size={"lg"}>Appliquer le filtre <Filter size={20}/></Button>
+                <Button onClick={filter} className={"w-full"} size={"lg"}>Appliquer le filtre <Filter size={20}/></Button>
             </CardFooter>
         </Card>
     );
@@ -62,9 +60,11 @@ const TrainingCard = forwardRef(({training}, ref) => {
                 <CardTitle>{training.parcours}</CardTitle>
                 <CardDescription>{training.lieux}</CardDescription>
             </CardHeader>
-            <CardContent></CardContent>
+            <CardContent>
+
+            </CardContent>
             <CardFooter className={"flex justify-end"}>
-                <Link href={"/?"}>
+                <Link href={`/training/${training.id}`}>
                     <Button>En savoir plus <ArrowRight size={20}/></Button>
                 </Link>
             </CardFooter>
