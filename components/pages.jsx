@@ -82,7 +82,7 @@ const SearchPage = ({trainings, params}) => {
                     <TrainingCard training={training} key={i}/>
                 ))}
                 {searchResult.length > page ? (
-                    <Button size={"lg"} className={"w-fit mx-auto"} onClick={() => setPage(p => p + 10)}>Charger plus <Plus size={20}/></Button>
+                    <Button size={"lg"} className={"w-fit mx-auto"} onClick={() => setPage(p => p + 10)}>Voir plus<Plus size={20}/></Button>
                 ) : null}
             </div>
         </Section>

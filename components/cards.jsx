@@ -5,16 +5,17 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/
 import {forwardRef, useRef, useState} from "react";
 import {getKeyFromObject} from "@/lib/filters";
 import {Label} from "@/components/ui/label";
-import {firstLetterUppercase} from "@/lib/utils";
+import {cn, firstLetterUppercase} from "@/lib/utils";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {ArrowRight, Filter} from "lucide-react";
+import {useHover, useHoverDirty} from "react-use";
 
 const TrainingsFilterCard = forwardRef(({city, setCity, alt, setAlt, filter, trainings}, ref) => {
     const citys = getKeyFromObject(trainings, "ville");
 
     return (
-        <Card ref={ref} className={"w-1/4 h-fit bg-gradient-to-t from-primary/5 to-ground to-20% sticky top-[calc(68px+1.5rem)]"}>
+        <Card ref={ref} className={cn("w-1/4 h-fit bg-gradient-to-t from-primary/5 to-ground to-20% sticky transition-all top-[calc(68px+1.5rem)]")}>
             <CardHeader>
                 <CardTitle>Filtrer la recherche</CardTitle>
                 <CardDescription>Pour préciser les résultats</CardDescription>
@@ -36,7 +37,7 @@ const TrainingsFilterCard = forwardRef(({city, setCity, alt, setAlt, filter, tra
                 <div className={"flex flex-col justify-start gap-1"}>
                     <Label htmlFor={"select-city"}>Propose alternance</Label>
                     <Select value={alt} onValueChange={(v) => setAlt(v)}>
-                        <SelectTrigger id={"select-city"}>
+                        <SelectTrigger disabled id={"select-city"}>
                             <SelectValue placeholder="Choisir alternance"/>
                         </SelectTrigger>
                         <SelectContent>
