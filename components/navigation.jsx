@@ -5,6 +5,7 @@ import {Button} from "@/components/ui/button";
 import {usePathname} from "next/navigation";
 import Link from "next/link";
 import {BookOpen, ChartArea, Rotate3d, Search} from "lucide-react";
+import Logo from "@/components/ui/logo";
 
 const Navbar = forwardRef(({}, ref) => {
     const pathname = usePathname();
@@ -16,14 +17,16 @@ const Navbar = forwardRef(({}, ref) => {
     ];
 
     return (
-        <nav ref={ref} className={"flex px-6 py-4 sticky top-0 z-20 items-center bg-background"}>
+        <nav ref={ref} className={"flex px-6 py-4 sticky top-0 z-20 items-center backdrop-blur-xl shadow"}>
             <div className={"basis-1/4"}>
-                <Link href={"/"} className={"text-3xl font-bold w-fit"} asChild>MSTR</Link>
+                <Link className={"w-fit"} href={"/"}>
+                    <Logo/>
+                </Link>
             </div>
             <div className={"flex gap-2 basis-1/2 justify-center"}>
-                {links.map((link, index) => (
-                    <Link href={link.href} key={index} asChild>
-                        <Button variant={pathname === link.href ? "primary" : "outline"}>
+                {links.map((link, i) => (
+                    <Link href={link.href} key={i}>
+                        <Button key={i} variant={pathname === link.href ? "primary" : "outline"}>
                             {link.name}
                             <link.icon className={pathname !== link.href && "text-muted-foreground"}/>
                         </Button>
@@ -35,8 +38,6 @@ const Navbar = forwardRef(({}, ref) => {
                     <Button>En savoir plus <BookOpen size={20}/></Button>
                 </Link>
             </div>
-            <div
-                className={"absolute bg-gradient-to-l left-0 w-screen mx-auto from-transparent via-border to-transparent h-[1px] bottom-0"}></div>
         </nav>
     );
 });
