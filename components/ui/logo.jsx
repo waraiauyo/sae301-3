@@ -1,6 +1,8 @@
 "use client"
 
-const Logo = () => {
+import {forwardRef} from "react";
+
+const Logo = forwardRef(({}, ref) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="36"
              zoomAndPan="magnify" viewBox="0 0 750 749.999995" height="36" preserveAspectRatio="xMidYMid meet"
@@ -17,6 +19,6 @@ const Logo = () => {
             </g>
         </svg>
     );
-}
+});
 
 export default Logo;
