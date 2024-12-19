@@ -12,7 +12,7 @@ const SearchInput = forwardRef(({searchQuery, onChange, className}, ref) => {
             <Input ref={ref} className={cn("backdrop-blur-xl bg-ground/90 h-12 pl-10", className)}
                    value={searchQuery}
                    onChange={onChange}
-                   placeholder={"Rechercher une formation"}/>
+                   placeholder={"(Nom de la formation, mots-clés ...)"}/>
         </div>
     );
 });
