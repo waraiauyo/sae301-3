@@ -65,7 +65,7 @@ const TrainingCard = forwardRef(({training}, ref) => {
 
             </CardContent>
             <CardFooter className={"flex justify-end"}>
-                <Link href={`/training/${training.id}`}>
+                <Link href={`/master/${training.ifc}`}>
                     <Button>En savoir plus <ArrowRight size={20}/></Button>
                 </Link>
             </CardFooter>
