@@ -73,4 +73,39 @@ const TrainingCard = forwardRef(({training}, ref) => {
     );
 });
 
-export {TrainingsFilterCard, TrainingCard};
+const MasterInfoCard = forwardRef(({master}, ref) => {
+    return (
+        <Card ref={ref}>
+            <CardHeader>
+                <CardTitle>{master.parcours}</CardTitle>
+                <CardDescription>Référence : {master.ifc}</CardDescription>
+            </CardHeader>
+            <CardContent className={"flex flex-col gap-2"}>
+                <span>Etablissement : {master.etablissement}</span>
+                <span>Académie : {master.academie}</span>
+                <span>Emplacement : {master.lieux}</span>
+                <span>Mention : {master.mention}</span>
+                <span>Discipline : {master.discipline}</span>
+                <span>Secteur disciplinaire : {master.secteur_disciplinaire}</span>
+            </CardContent>
+        </Card>
+    );
+});
+
+const MasterStatsCard = forwardRef(({master}, ref) => {
+    return (
+        <Card ref={ref}>
+            <CardHeader>
+                <CardTitle>Statistiques</CardTitle>
+                <CardDescription>De l'année {master.lastYearApplication.identifiants.anneeCollecte}.</CardDescription>
+            </CardHeader>
+            <CardContent className={"flex flex-col gap-2"}>
+                <span>Capacité : {master.lastYearApplication.general.capacite}</span>
+                <span>Candidatures : {master.lastYearApplication.general.nb} ( dont {master.lastYearApplication.general.nbFemmes} femmes )</span>
+                <span>Nombre d'acceptés : {master.lastYearApplication.general.accept} ( dont {master.lastYearApplication.general.acceptFemmes} femmes )</span>
+            </CardContent>
+        </Card>
+    );
+});
+
+export {TrainingsFilterCard, TrainingCard, MasterInfoCard, MasterStatsCard};

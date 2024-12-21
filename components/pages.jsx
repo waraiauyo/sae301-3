@@ -1,7 +1,7 @@
 "use client"
 
 import {Section} from "@/components/wrappers";
-import {TrainingCard, TrainingsFilterCard} from "@/components/cards";
+import {MasterInfoCard, MasterStatsCard, TrainingCard, TrainingsFilterCard} from "@/components/cards";
 import {TrainingsFilterCardSkeleton} from "@/components/skeletons";
 import {SearchInput} from "@/components/inputs";
 import {MoveDown} from "lucide-react";
@@ -89,4 +89,13 @@ const SearchPage = ({trainings, params}) => {
     );
 }
 
-export {HomePage, SearchPage};
+const MasterPage = ({master}) => {
+    return(
+        <Section className={"flex gap-2 flex-col"}>
+            <MasterInfoCard master={master} />
+            <MasterStatsCard master={master} />
+        </Section>
+    );
+}
+
+export {HomePage, SearchPage, MasterPage};
