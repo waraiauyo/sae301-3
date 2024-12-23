@@ -11,6 +11,8 @@ import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
 import {SeparatorCards, SeparatorNumbers} from "@/components/separatorVictor";
 import {FooterHome} from "@/components/footerMain";
+import {Accordion, AccordionContent, AccordionItem, AccordionTrigger,} from "@/components/ui/accordion";
+import Link from "next/link";
 
 const HomePage = () => {
     return (
@@ -59,7 +61,9 @@ const HomePage = () => {
                 <div className="flex flex-col items-center justify-center w-full">
                     <h2 className="text-xl font-bold text-center mt-12 mb-2">Des questions ?</h2>
                     <p className="text-sm  mb-6">Toutes nos réponses dans notre FAQ.</p>
-                    <Button>Découvrez notre FAQ <ArrowRight size={20}/></Button>
+                    <Link href="/faq">
+                        <Button>Découvrez notre FAQ <ArrowRight size={20}/></Button>
+                    </Link>
                 </div>
             </Section>
             <FooterHome/>
@@ -120,4 +124,46 @@ const MasterPage = ({master}) => {
     );
 }
 
-export {HomePage, SearchPage, MasterPage};
+const FAQpage = () => {
+    return (
+        <Section className="h-[calc(100vh-68px)]">
+            <div className="h-screen bg-black text-white flex flex-col items-center justify-center px-4">
+                <h1 className="text-4xl font-bold text-center mb-10">Foire Aux Questions (FAQ)</h1>
+                <div className="w-full max-w-4xl bg-black/40 backdrop-blur-lg p-6 rounded-lg">
+                    <Accordion type="single" collapsible>
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger className="text-lg text-white hover:text-primary">
+                                Comment rechercher un master ?
+                            </AccordionTrigger>
+                            <AccordionContent className="text-gray-300">
+                                Vous pouvez utiliser notre barre de recherche pour explorer les masters par nom, domaine
+                                d'étude ou localisation.
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-2">
+                            <AccordionTrigger className="text-lg text-white hover:text-primary">
+                                Comment sont calculés les taux d'insertion professionnelle ?
+                            </AccordionTrigger>
+                            <AccordionContent className="text-gray-300">
+                                Les taux d'insertion sont basés sur des données officielles fournies par le ministère de
+                                l'Éducation et les universités.
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-3">
+                            <AccordionTrigger className="text-lg text-white hover:text-primary">
+                                Le site est-il mis à jour régulièrement ?
+                            </AccordionTrigger>
+                            <AccordionContent className="text-gray-300">
+                                Oui, nos données sont actualisées chaque trimestre pour refléter les dernières
+                                statistiques
+                                et offres de formation.
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </div>
+            </div>
+        </Section>
+    )
+}
+
+export {HomePage, SearchPage, MasterPage, FAQpage};
