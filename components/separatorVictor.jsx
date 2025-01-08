@@ -2,6 +2,7 @@ import { Separator } from "@/components/ui/separator"
 import {Card, CardContent, CardDescription, CardFooter, CardTitle} from "@/components/ui/card";
 import {ArrowRight} from "lucide-react";
 import {Button} from "@/components/ui/button";
+import Link from "next/link";
 
 const SeparatorNumbers = () => {
     return (
@@ -36,7 +37,7 @@ const SeparatorCards = () => {
     return (
         <div className="mt-10">
             <Separator className="my-4"/>
-            <div className="flex gap-4 items-center space-x-4 text-sm justify-center text-center mt-10">
+            <div className="flex gap-4 items-center space-x-4 text-sm justify-center text-center mt-10 mx-2">
                 <div className="flex flex-col items-center justify-center">
                     <Card className="text-pretty basis-1/3 px-4 pt-6">
                         <CardTitle>
@@ -49,7 +50,9 @@ const SeparatorCards = () => {
 
                         </CardContent>
                         <CardFooter className="flex flex-row justify-end">
-                            <Button>En savoir plus <ArrowRight size={20}/></Button>
+                            <Link href="/yesir">
+                                <Button>En savoir plus <ArrowRight size={20}/></Button>
+                            </Link>
                         </CardFooter>
                     </Card>
                 </div>

@@ -5,7 +5,9 @@ import {MasterInfoCard, MasterStatsCard, TrainingCard, TrainingsFilterCard} from
 import {TrainingsFilterCardSkeleton} from "@/components/skeletons";
 import {SearchInput} from "@/components/inputs";
 import {ArrowRight, MoveDown} from "lucide-react";
-import {useState} from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
@@ -13,20 +15,43 @@ import {SeparatorCards, SeparatorNumbers} from "@/components/separatorVictor";
 import {FooterHome} from "@/components/footerMain";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger,} from "@/components/ui/accordion";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const HomePage = () => {
+    const [searchQuery, setSearchQuery] = useState("");
+    const router = useRouter();
+
+    const handleSearch = () => {
+        if (searchQuery.trim() !== "") {
+            // Redirection vers la page /search avec la requête
+            router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
+        }
+    };
     return (
         <>
-            <Section className="h-[calc(100vh-68px)] flex items-center justify-center">
-                <div className="circlePosition w-[1090px] h-[400px] bg-primary/80 rounded-[100%] absolute z-1 -top-10 left-[50%] translate-x-[-50%] translate-y-[-50%] blur-[120px]"></div>
+            <motion.div initial={{ opacity: 0 }}
+                        animate={{ opacity: 1}}
+                        exit={{ opacity: 0}}
+                        transition={{ duration: 0.5 }}
+                        className="h-[calc(100vh-68px)] flex items-center justify-center">
+                <div className=" w-[1090px] h-[400px] bg-primary/80 rounded-[100%] absolute z-1 -top-10 left-[50%] translate-x-[-50%] translate-y-[-50%] blur-[120px]"></div>
                 <div className="flex flex-col gap-2 text-center justify-center">
                     <h1 className="font-black text-6xl">S'informer, candidater, décider</h1>
                     <h2 className="text-xl mb-20">Recherche de master avec son taux d'insertion professionnel</h2>
-                    <SearchInput className={"w-full"}/>
+                    <SearchInput
+                        className={"w-full"}
+                        searchQuery={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onSearch={handleSearch} // Recherche sur "Entrée"
+                    />
                     <MoveDown size={40} className="text-primary mx-auto mt-40"/>
                 </div>
-            </Section>
-            <Section className="h-[calc(100vh-68px)] flex-col items-center justify-between">
+            </motion.div>
+            <motion.div initial={{ opacity: 0 }}
+                        animate={{ opacity: 1}}
+                        exit={{ opacity: 0}}
+                        transition={{ duration: 0.5 }}
+                        className="h-[calc(100vh-68px)] flex-col items-center justify-between">
                 <h2 className="text-xl font-bold text-center mb-4">Quel master après ma license ?</h2>
                 <div className="flex gap-20 text-start">
                     <article
@@ -52,8 +77,12 @@ const HomePage = () => {
                     <SeparatorNumbers/>
                     <MoveDown size={40} className="text-primary mx-auto mt-10"/>
                 </div>
-            </Section>
-            <Section className="h-[calc(100vh-68px)] flex-col items-center justify-between">
+            </motion.div>
+            <motion.div initial={{ opacity: 0 }}
+                        animate={{ opacity: 1}}
+                        exit={{ opacity: 0}}
+                        transition={{ duration: 0.5 }}
+                        className="h-[calc(100vh-68px)] flex-col items-center justify-between">
                 <h2 className="text-xl font-bold text-center mb-4">Préparer son projet d'orientation</h2>
                 <div>
                     <SeparatorCards/>
@@ -65,50 +94,62 @@ const HomePage = () => {
                         <Button>Découvrez notre FAQ <ArrowRight size={20}/></Button>
                     </Link>
                 </div>
-            </Section>
+            </motion.div>
             <FooterHome/>
         </>
     );
 }
 
 const SearchPage = ({trainings, params}) => {
-    let trainingsFiltered = trainings
+    const searchParams = useSearchParams();
+    const initialQuery = searchParams.get("query") || ""; // Requête depuis l'URL
 
     const [city, setCity] = useState();
     const [alt, setAlt] = useState(true);
     const [page, setPage] = useState(10);
-    const [searchQuery, setSearchQuery] = useState(params ? params : "");
-    const [searchResult, setSearchResult] = useState(trainings);
+    const [searchQuery, setSearchQuery] = useState(initialQuery);
+    const [searchResult, setSearchResult] = useState([]);
+
+    useEffect(() => {
+        // Recherche initiale basée sur la query string
+        if (initialQuery) {
+            handleSearch({ target: { value: initialQuery } });
+        }
+    }, [initialQuery, trainings]);
 
     const handleSearch = (e) => {
-        setPage(10);
-        setSearchQuery(e.target.value);
+        const query = e.target.value;
+        setSearchQuery(query);
+        let trainingsFiltered = trainings;
 
-        if (city) trainingsFiltered = trainings.filter(training => training.ville === city);
-        else trainingsFiltered = trainings;
+        if (city) trainingsFiltered = trainings.filter((training) => training.ville === city);
 
-        const fuse = new Fuse(trainingsFiltered, {keys: ["parcours"], threshold: 0.3});
-        const results = fuse.search(searchQuery);
-        const items = results.map(result => result.item);
-
-        setSearchResult(items);
-    }
+        const fuse = new Fuse(trainingsFiltered, { keys: ["parcours"], threshold: 0.3 });
+        const results = fuse.search(query);
+        setSearchResult(results.map((result) => result.item));
+    };
 
     const filter = () => {
-        trainingsFiltered = trainings.filter(training => training.ville === city);
-        setSearchResult(trainings.filter(training => training.ville === city));
-    }
+        const filtered = trainings.filter((training) => training.ville === city);
+        setSearchResult(filtered);
+    };
 
     return (
         <Section className={"flex gap-2"}>
-            {trainings ? <TrainingsFilterCard alt={alt} setAlt={setAlt} city={city} setCity={setCity} filter={filter} trainings={trainings}/> : <TrainingsFilterCardSkeleton/>}
+            {trainings ? (
+                <TrainingsFilterCard alt={alt} setAlt={setAlt} city={city} setCity={setCity} filter={filter} trainings={trainings} />
+            ) : (
+                <TrainingsFilterCardSkeleton />
+            )}
             <div className="flex flex-col flex-wrap gap-2 w-3/4">
                 <SearchInput searchQuery={searchQuery} onChange={handleSearch} />
                 {searchResult.slice(0, page).map((training, i) => (
-                    <TrainingCard training={training} key={i}/>
+                    <TrainingCard training={training} key={i} />
                 ))}
                 {searchResult.length > page ? (
-                    <Button size={"lg"} className={"w-fit mx-auto"} onClick={() => setPage(p => p + 10)}>Voir plus<Plus size={20}/></Button>
+                    <Button size={"lg"} className={"w-fit mx-auto"} onClick={() => setPage((p) => p + 10)}>
+                        Voir plus<Plus size={20} />
+                    </Button>
                 ) : null}
             </div>
         </Section>
@@ -157,6 +198,14 @@ const FAQpage = () => {
                                 Oui, nos données sont actualisées chaque trimestre pour refléter les dernières
                                 statistiques
                                 et offres de formation.
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-4">
+                            <AccordionTrigger className="text-lg text-white hover:text-primary">
+                                En France ou à l'étranger ?
+                            </AccordionTrigger>
+                            <AccordionContent className="text-gray-300">
+                                Vous pouvez effectuer un master à l'étranger cependant seuls ceux en France sont répertoriés sur notre site.
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
