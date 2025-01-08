@@ -12,8 +12,7 @@ const Navbar = forwardRef(({}, ref) => {
 
     const links = [
         {name: "Rechercher un master", href: "/search", icon: Search},
-        {name: "S'informer", href: "/yesir", icon: Rotate3d},
-        {name: "Statistiques", href: "/stats", icon: ChartArea},
+        {name: "S'informer", href: "/inform", icon: Rotate3d},
     ];
 
     return (
@@ -34,7 +33,7 @@ const Navbar = forwardRef(({}, ref) => {
                 ))}
             </div>
             <div className={"flex gap-2 basis-1/4 justify-end"}>
-                <Link href={"/about"}>
+                <Link href={"/candidat"}>
                     <Button>Candidater <Send size={20}/></Button>
                 </Link>
             </div>

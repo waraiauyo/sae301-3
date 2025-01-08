@@ -50,7 +50,7 @@ const SeparatorCards = () => {
 
                         </CardContent>
                         <CardFooter className="flex flex-row justify-end">
-                            <Link href="/yesir">
+                            <Link href="/inform">
                                 <Button>En savoir plus <ArrowRight size={20}/></Button>
                             </Link>
                         </CardFooter>
@@ -68,7 +68,9 @@ const SeparatorCards = () => {
 
                         </CardContent>
                         <CardFooter className="flex flex-row justify-end">
-                            <Button>En savoir plus <ArrowRight size={20}/></Button>
+                            <Link href="/inform">
+                                <Button>En savoir plus <ArrowRight size={20}/></Button>
+                            </Link>
                         </CardFooter>
                     </Card>
                 </div>
@@ -84,7 +86,9 @@ const SeparatorCards = () => {
 
                         </CardContent>
                         <CardFooter className="flex flex-row justify-end">
-                            <Button>En savoir plus <ArrowRight size={20}/></Button>
+                            <Link href="/inform">
+                                <Button>En savoir plus <ArrowRight size={20}/></Button>
+                            </Link>
                         </CardFooter>
                     </Card>
                 </div>
