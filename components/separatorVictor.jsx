@@ -36,7 +36,7 @@ const SeparatorCards = () => {
     return (
         <div className="mt-10">
             <Separator className="my-4"/>
-            <div className="flex gap-4 items-center space-x-4 text-sm justify-center text-center mt-10">
+            <div className="flex gap-4 items-center space-x-4 text-sm justify-center text-center mt-10 mx-2">
                 <div className="flex flex-col items-center justify-center">
                     <Card className="text-pretty basis-1/3 px-4 pt-6">
                         <CardTitle>
