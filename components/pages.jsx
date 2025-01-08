@@ -1,7 +1,13 @@
 "use client"
 
 import {Section} from "@/components/wrappers";
-import {MasterInfoCard, MasterStatsCard, TrainingCard, TrainingsFilterCard} from "@/components/cards";
+import {
+    MasterInfoCard,
+    MasterStatsCard,
+    MasterStatsCardTest,
+    TrainingCard,
+    TrainingsFilterCard
+} from "@/components/cards";
 import {TrainingsFilterCardSkeleton} from "@/components/skeletons";
 import {SearchInput} from "@/components/inputs";
 import {ArrowRight, MoveDown} from "lucide-react";
@@ -11,11 +17,13 @@ import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
+import {ApplicationsAcceptedChart, ApplicationsChart} from "@/components/charts";
 import {SeparatorCards, SeparatorNumbers} from "@/components/separatorVictor";
 import {FooterHome} from "@/components/footerMain";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger,} from "@/components/ui/accordion";
 import Link from "next/link";
 import { motion } from "framer-motion";
+
 
 const HomePage = () => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -136,20 +144,17 @@ const SearchPage = ({trainings, params}) => {
 
     return (
         <Section className={"flex gap-2"}>
-            {trainings ? (
-                <TrainingsFilterCard alt={alt} setAlt={setAlt} city={city} setCity={setCity} filter={filter} trainings={trainings} />
-            ) : (
-                <TrainingsFilterCardSkeleton />
-            )}
+
+            {trainings ? <TrainingsFilterCard alt={alt} setAlt={setAlt} city={city} setCity={setCity} filter={filter}
+                                              trainings={trainings}/> : <TrainingsFilterCardSkeleton/>}
             <div className="flex flex-col flex-wrap gap-2 w-3/4">
-                <SearchInput searchQuery={searchQuery} onChange={handleSearch} />
+                <SearchInput searchQuery={searchQuery} onChange={handleSearch}/>
                 {searchResult.slice(0, page).map((training, i) => (
                     <TrainingCard training={training} key={i} />
                 ))}
                 {searchResult.length > page ? (
-                    <Button size={"lg"} className={"w-fit mx-auto"} onClick={() => setPage((p) => p + 10)}>
-                        Voir plus<Plus size={20} />
-                    </Button>
+                    <Button size={"lg"} className={"w-fit mx-auto"} onClick={() => setPage(p => p + 10)}>Voir plus<Plus
+                        size={20}/></Button>
                 ) : null}
             </div>
         </Section>
@@ -157,10 +162,15 @@ const SearchPage = ({trainings, params}) => {
 }
 
 const MasterPage = ({master}) => {
-    return(
+    return (
         <Section className={"flex gap-2 flex-col"}>
-            <MasterInfoCard master={master} />
-            <MasterStatsCard master={master} />
+            <MasterInfoCard master={master}/>
+            <div className={"flex flex-col gap-2"}>
+                <div className={"flex gap-2"}>
+                    <ApplicationsChart data={master}/>
+                    <ApplicationsAcceptedChart data={master}/>
+                </div>
+            </div>
         </Section>
     );
 }
