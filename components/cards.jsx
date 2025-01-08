@@ -10,12 +10,14 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {ArrowRight, Filter} from "lucide-react";
 import {useHover, useHoverDirty} from "react-use";
+import {ApplicationsAcceptedChart, ApplicationsChart} from "@/components/charts";
 
 const TrainingsFilterCard = forwardRef(({city, setCity, alt, setAlt, filter, trainings}, ref) => {
     const citys = getKeyFromObject(trainings, "ville");
 
     return (
-        <Card ref={ref} className={cn("w-1/4 h-fit bg-gradient-to-t from-primary/5 to-ground to-20% sticky transition-all top-[calc(68px+1.5rem)]")}>
+        <Card ref={ref}
+              className={cn("w-1/4 h-fit bg-gradient-to-t from-primary/5 to-ground to-20% sticky transition-all top-[calc(68px+1.5rem)]")}>
             <CardHeader>
                 <CardTitle>Filtrer la recherche</CardTitle>
                 <CardDescription>Pour préciser les résultats</CardDescription>
@@ -48,7 +50,8 @@ const TrainingsFilterCard = forwardRef(({city, setCity, alt, setAlt, filter, tra
                 </div>
             </CardContent>
             <CardFooter>
-                <Button onClick={filter} className={"w-full"} size={"lg"}>Appliquer le filtre <Filter size={20}/></Button>
+                <Button onClick={filter} className={"w-full"} size={"lg"}>Appliquer le filtre <Filter
+                    size={20}/></Button>
             </CardFooter>
         </Card>
     );
@@ -92,7 +95,7 @@ const MasterInfoCard = forwardRef(({master}, ref) => {
     );
 });
 
-const MasterStatsCard = forwardRef(({master}, ref) => {
+const MasterStatsCardTest = forwardRef(({master}, ref) => {
     return (
         <Card ref={ref}>
             <CardHeader>
@@ -108,4 +111,4 @@ const MasterStatsCard = forwardRef(({master}, ref) => {
     );
 });
 
-export {TrainingsFilterCard, TrainingCard, MasterInfoCard, MasterStatsCard};
+export {TrainingsFilterCard, TrainingCard, MasterInfoCard, MasterStatsCardTest};
