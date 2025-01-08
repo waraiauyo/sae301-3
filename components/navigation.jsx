@@ -4,7 +4,7 @@ import {forwardRef} from "react";
 import {Button} from "@/components/ui/button";
 import {usePathname} from "next/navigation";
 import Link from "next/link";
-import {BookOpen, ChartArea, Rotate3d, Search} from "lucide-react";
+import {BookOpen, ChartArea, Rotate3d, Search, Send} from "lucide-react";
 import Logo from "@/components/ui/logo";
 
 const Navbar = forwardRef(({}, ref) => {
@@ -35,7 +35,7 @@ const Navbar = forwardRef(({}, ref) => {
             </div>
             <div className={"flex gap-2 basis-1/4 justify-end"}>
                 <Link href={"/about"}>
-                    <Button>En savoir plus <BookOpen size={20}/></Button>
+                    <Button>Candidater <Send size={20}/></Button>
                 </Link>
             </div>
         </nav>
