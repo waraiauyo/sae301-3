@@ -28,7 +28,7 @@ export function ApplicationsChart({data}) {
     ];
 
     return (
-        <Card className={"w-full"}>
+        <Card className={"w-full bg-black/80"}>
             <CardHeader>
                 <CardTitle>Nombre de candidature</CardTitle>
                 <CardDescription>Sur
@@ -70,7 +70,7 @@ export function ApplicationsAcceptedChart({data}) {
     ];
 
     return (
-        <Card className="flex flex-col w-full">
+        <Card className="flex flex-col w-full bg-black/80">
             <CardHeader>
                 <CardTitle>Candidatures acceptées.</CardTitle>
                 <CardDescription>Sur

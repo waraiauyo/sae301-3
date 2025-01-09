@@ -10,7 +10,7 @@ import {
 } from "@/components/cards";
 import {TrainingsFilterCardSkeleton} from "@/components/skeletons";
 import {SearchInput} from "@/components/inputs";
-import {ArrowRight, MoveDown, CalendarX} from "lucide-react";
+import {ArrowRight, MoveDown, CalendarX, GraduationCap, Filter, Lightbulb, Compass} from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -177,10 +177,31 @@ const MasterPage = ({master}) => {
 
 const FAQpage = () => {
     return (
-        <Section className="h-[calc(100vh-68px)]">
+        <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="h-[calc(100vh-68px)]"
+        >
             <div className="h-screen bg-black text-white flex flex-col items-center justify-center px-4">
-                <h1 className="text-4xl font-bold text-center mb-10">Foire Aux Questions (FAQ)</h1>
-                <div className="w-full max-w-4xl bg-black/40 backdrop-blur-lg p-6 rounded-lg">
+                {/* Header */}
+                <motion.h1
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2, ease: "easeInOut" }}
+                    className="text-4xl font-bold text-center mb-10"
+                >
+                    Foire Aux Questions (FAQ)
+                </motion.h1>
+
+                {/* Accordion Container */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.4, ease: "easeInOut" }}
+                    className="w-full max-w-4xl bg-black/40 backdrop-blur-lg p-6 rounded-lg"
+                >
                     <Accordion type="single" collapsible>
                         <AccordionItem value="item-1">
                             <AccordionTrigger className="text-lg text-white hover:text-primary">
@@ -206,8 +227,7 @@ const FAQpage = () => {
                             </AccordionTrigger>
                             <AccordionContent className="text-gray-300">
                                 Oui, nos données sont actualisées chaque trimestre pour refléter les dernières
-                                statistiques
-                                et offres de formation.
+                                statistiques et offres de formation.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-4">
@@ -219,11 +239,12 @@ const FAQpage = () => {
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
-                </div>
+                </motion.div>
             </div>
-        </Section>
-    )
-}
+            <FooterHome/>
+        </motion.div>
+    );
+};
 
 const InformPage = () => {
     const sectionVariants = {
@@ -234,161 +255,158 @@ const InformPage = () => {
     const transitionSettings = { duration: 0.5, ease: "easeInOut" };
 
     return (
-            <div className="container mx-auto pt-5 px-4 sm:px-6 lg:px-8">
-                <motion.section
-                    initial="hidden"
-                    animate="visible"
-                    transition={transitionSettings}
-                    className="text-center mb-12"
-                >
-                    <h1 className="text-3xl font-bold mb-4 sm:text-4xl text-primary">
-                        Tout savoir sur les Masters en France
-                    </h1>
-                    <p className="text-white text-lg max-w-2xl mx-auto">
-                        Découvrez les clés pour bien comprendre les masters en France, comment
-                        orienter vos choix et utiliser efficacement nos outils pour trouver votre
-                        voie.
-                    </p>
-                </motion.section>
+        <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
+            {/* Hero Section */}
+            <motion.section
+                initial="hidden"
+                animate="visible"
+                transition={transitionSettings}
+                className="text-center mb-12"
+            >
+                <h1 className="text-3xl font-bold mb-4 sm:text-4xl text-primary">
+                    Tout savoir sur les Masters en France
+                </h1>
+                <p className="text-white text-lg max-w-2xl mx-auto">
+                    Découvrez les clés pour bien comprendre les masters en France, comment
+                    orienter vos choix et utiliser efficacement nos outils pour trouver votre
+                    voie.
+                </p>
+            </motion.section>
 
-                <motion.section
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={transitionSettings}
-                    variants={sectionVariants}
-                    className="mb-16"
-                >
-                    <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        1. Comprendre les Masters
-                    </h2>
-                    <div className="flex flex-col sm:flex-row gap-6 items-center">
-                        <div className="flex-1">
-                            <p className="text-white">
-                                Les masters en France sont des diplômes nationaux organisés sur
-                                deux années (M1 et M2). Ils offrent une spécialisation dans de
-                                nombreux domaines, allant des sciences aux arts.
-                            </p>
-                            <p className="text-white mt-4">
-                                Chaque master est conçu pour répondre à des besoins spécifiques du
-                                marché du travail, tout en offrant une opportunité d'approfondir
-                                vos connaissances académiques.
-                            </p>
-                        </div>
-                        <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+            {/* Section 1: Comprendre les Masters */}
+            <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{once: true}}
+                transition={transitionSettings}
+                variants={sectionVariants}
+                className="mb-16"
+            >
+                <h2 className="text-2xl font-semibold mb-4 text-primary">
+                    1. Comprendre les Masters
+                </h2>
+                <div className="flex flex-col sm:flex-row gap-6 items-center">
+                    {/* Text Content */}
+                    <div className="flex-1">
+                        <p className="text-white">
+                            Les masters en France sont des diplômes nationaux organisés sur
+                            deux années (M1 et M2). Ils offrent une spécialisation dans de
+                            nombreux domaines, allant des sciences aux arts.
+                        </p>
+                        <p className="text-white mt-4">
+                            Chaque master est conçu pour répondre à des besoins spécifiques du
+                            marché du travail, tout en offrant une opportunité d'approfondir
+                            vos connaissances académiques.
+                        </p>
                     </div>
-                </motion.section>
+                    {/* Icon */}
+                    <GraduationCap size={100} className="text-primary flex-1"/>
+                </div>
+            </motion.section>
 
-                <motion.section
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={transitionSettings}
-                    variants={sectionVariants}
-                    className="mb-16"
-                >
-                    <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        2. Utiliser les Filtres de Recherche
-                    </h2>
-                    <div className="flex flex-col sm:flex-row-reverse gap-6 items-center">
-                        <div className="flex-1">
-                            <p className="text-white">
-                                Notre filtre de recherche vous permet de trouver des masters en
-                                fonction de critères tels que la ville, le domaine d'études, et le
-                                taux d'insertion professionnelle.
-                            </p>
-                            <p className="text-white mt-4">
-                                Essayez différents mots-clés ou utilisez nos suggestions pour
-                                affiner vos résultats et découvrir les masters qui correspondent
-                                à vos aspirations.
-                            </p>
-                        </div>
-                        <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+            {/* Section 2: Utiliser les Filtres de Recherche */}
+            <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{once: true}}
+                transition={transitionSettings}
+                variants={sectionVariants}
+                className="mb-16"
+            >
+                <h2 className="text-2xl font-semibold mb-4 text-primary">
+                    2. Utiliser les Filtres de Recherche
+                </h2>
+                <div className="flex flex-col sm:flex-row-reverse gap-6 items-center">
+                    {/* Text Content */}
+                    <div className="flex-1">
+                        <p className="text-white">
+                            Notre filtre de recherche vous permet de trouver des masters en
+                            fonction de critères tels que la ville, le domaine d'études, et le
+                            taux d'insertion professionnelle.
+                        </p>
+                        <p className="text-white mt-4">
+                            Essayez différents mots-clés ou utilisez nos suggestions pour
+                            affiner vos résultats et découvrir les masters qui correspondent
+                            à vos aspirations.
+                        </p>
                     </div>
-                </motion.section>
+                    {/* Icon */}
+                    <Filter size={100} className="text-primary flex-1"/>
+                </div>
+            </motion.section>
 
-                <motion.section
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={transitionSettings}
-                    variants={sectionVariants}
-                    className="mb-16"
-                >
-                    <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        3. Identifier ses Motivations
-                    </h2>
-                    <div className="flex flex-col sm:flex-row gap-6 items-center">
-                        <div className="flex-1">
-                            <p className="text-white">
-                                Trouver ses motivations peut parfois être difficile. Posez-vous
-                                ces questions :
-                            </p>
-                            <ul className="list-disc list-inside mt-4 space-y-2 text-white">
-                                <li>Quels sont mes intérêts personnels et professionnels ?</li>
-                                <li>Quel domaine me passionne le plus ?</li>
-                                <li>Quels objectifs de carrière ai-je à moyen et long terme ?</li>
-                            </ul>
-                        </div>
-                        <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+            {/* Section 3: Trouver ses Motivations */}
+            <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{once: true}}
+                transition={transitionSettings}
+                variants={sectionVariants}
+                className="mb-16"
+            >
+                <h2 className="text-2xl font-semibold mb-4 text-primary">
+                    3. Identifier ses Motivations
+                </h2>
+                <div className="flex flex-col sm:flex-row gap-6 items-center">
+                    {/* Text Content */}
+                    <div className="flex-1">
+                        <p className="text-white">
+                            Trouver ses motivations peut parfois être difficile. Posez-vous
+                            ces questions :
+                        </p>
+                        <ul className="list-disc list-inside mt-4 space-y-2 text-white">
+                            <li>Quels sont mes intérêts personnels et professionnels ?</li>
+                            <li>Quel domaine me passionne le plus ?</li>
+                            <li>Quels objectifs de carrière ai-je à moyen et long terme ?</li>
+                        </ul>
                     </div>
-                </motion.section>
+                    {/* Icon */}
+                    <Lightbulb size={100} className="text-primary flex-1"/>
+                </div>
+            </motion.section>
 
-                <motion.section
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={transitionSettings}
-                    variants={sectionVariants}
-                    className="mb-16"
-                >
-                    <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        4. Conseils pour Bien S'orienter
-                    </h2>
-                    <div className="flex flex-col sm:flex-row-reverse gap-6 items-center">
-                        <div className="flex-1">
-                            <p className="text-white">
-                                Voici quelques conseils pour faire un choix éclairé :
-                            </p>
-                            <ul className="list-decimal list-inside mt-4 space-y-2 text-white">
-                                <li>Consultez les débouchés professionnels des masters.</li>
-                                <li>Échangez avec des étudiants ou des diplômés pour leur retour
-                                    d'expérience.</li>
-                                <li>Testez vos intérêts avec des stages ou des projets académiques.</li>
-                            </ul>
-                        </div>
-                        <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+            {/* Section 4: Conseils pour l'Orientation */}
+            <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{once: true}}
+                transition={transitionSettings}
+                variants={sectionVariants}
+                className="mb-16"
+            >
+                <h2 className="text-2xl font-semibold mb-4 text-primary">
+                    4. Conseils pour Bien S'orienter
+                </h2>
+                <div className="flex flex-col sm:flex-row-reverse gap-6 items-center">
+                    {/* Text Content */}
+                    <div className="flex-1">
+                        <p className="text-white">
+                            Voici quelques conseils pour faire un choix éclairé :
+                        </p>
+                        <ul className="list-decimal list-inside mt-4 space-y-2 text-white">
+                            <li>Consultez les débouchés professionnels des masters.</li>
+                            <li>Échangez avec des étudiants ou des diplômés pour leur retour
+                                d'expérience.
+                            </li>
+                            <li>Testez vos intérêts avec des stages ou des projets académiques.</li>
+                        </ul>
                     </div>
-                </motion.section>
-
-                <motion.section
-                    initial="hidden"
-                    animate="visible"
-                    transition={transitionSettings}
-                    className="text-center"
-                >
-                    <h3 className="text-xl font-bold mb-4 text-primary">
-                        Besoin d'aide pour votre orientation ?
-                    </h3>
-                    <p className="text-white mb-6">
-                        Utilisez nos outils ou contactez-nous pour un accompagnement personnalisé.
-                    </p>
-                    <button className="px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-primary/80">
-                        Contactez-nous
-                    </button>
-                </motion.section>
-                <FooterHome/>
-            </div>
-);
+                    {/* Icon */}
+                    <Compass size={100} className="text-primary flex-1"/>
+                </div>
+            </motion.section>
+            <FooterHome/>
+        </div>
+    );
 }
 
 const LegalPage = () => {
     const sectionVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 },
+        hidden: {opacity: 0, y: 20},
+        visible: {opacity: 1, y: 0},
     };
 
-    const transitionSettings = { duration: 0.5, ease: "easeInOut" };
+    const transitionSettings = {duration: 0.5, ease: "easeInOut"};
     return (
         <motion.div
             initial="hidden"

@@ -4,7 +4,7 @@ import {Main} from "@/components/wrappers";
 import {Navbar} from "@/components/navigation";
 
 export const metadata = {
-    title: "MSTR",
+    title: "MSTRFinder",
     description: "",
 };
 
