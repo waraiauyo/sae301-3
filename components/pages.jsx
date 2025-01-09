@@ -119,7 +119,7 @@ const SearchPage = ({trainings}) => {
     useEffect(() => {
         // Recherche initiale basée sur la query string
         if (initialQuery) {
-            handleSearch({target: {value: initialQuery}});
+            handleSearch(initialQuery);
         }
     }, [initialQuery, trainings]);
 
