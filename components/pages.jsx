@@ -3,17 +3,15 @@
 import {Section} from "@/components/wrappers";
 import {
     MasterInfoCard,
-    MasterStatsCard,
-    MasterStatsCardTest,
     TrainingCard,
     TrainingsFilterCard
 } from "@/components/cards";
 import {TrainingsFilterCardSkeleton} from "@/components/skeletons";
 import {SearchInput} from "@/components/inputs";
 import {ArrowRight, MoveDown, CalendarX} from "lucide-react";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import {useEffect, useState} from "react";
+import {useSearchParams} from "next/navigation";
+import {useRouter} from "next/navigation";
 import Fuse from "fuse.js";
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
@@ -22,7 +20,7 @@ import {SeparatorCards, SeparatorNumbers} from "@/components/separatorVictor";
 import {FooterHome} from "@/components/footerMain";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger,} from "@/components/ui/accordion";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 
 
 const HomePage = () => {
@@ -37,12 +35,13 @@ const HomePage = () => {
     };
     return (
         <>
-            <motion.div initial={{ opacity: 0 }}
-                        animate={{ opacity: 1}}
-                        exit={{ opacity: 0}}
-                        transition={{ duration: 0.5 }}
+            <motion.div initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        exit={{opacity: 0}}
+                        transition={{duration: 0.5}}
                         className="h-[calc(100vh-68px)] flex items-center justify-center">
-                <div className=" w-[1090px] h-[400px] bg-primary/80 rounded-[100%] absolute z-1 -top-10 left-[50%] translate-x-[-50%] translate-y-[-50%] blur-[120px]"></div>
+                <div
+                    className=" w-[1090px] h-[400px] bg-primary/80 rounded-[100%] absolute z-1 -top-10 left-[50%] translate-x-[-50%] translate-y-[-50%] blur-[120px]"></div>
                 <div className="flex flex-col gap-2 text-center justify-center">
                     <h1 className="font-black text-6xl">S'informer, candidater, décider</h1>
                     <h2 className="text-xl mb-20">Recherche de master avec son taux d'insertion professionnel</h2>
@@ -55,10 +54,10 @@ const HomePage = () => {
                     <MoveDown size={40} className="text-primary mx-auto mt-40"/>
                 </div>
             </motion.div>
-            <motion.div initial={{ opacity: 0 }}
-                        animate={{ opacity: 1}}
-                        exit={{ opacity: 0}}
-                        transition={{ duration: 0.5 }}
+            <motion.div initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        exit={{opacity: 0}}
+                        transition={{duration: 0.5}}
                         className="h-[calc(100vh-68px)] flex-col items-center justify-between">
                 <h2 className="text-xl font-bold text-center mb-4">Quel master après ma license ?</h2>
                 <div className="flex gap-20 text-start">
@@ -86,10 +85,10 @@ const HomePage = () => {
                     <MoveDown size={40} className="text-primary mx-auto mt-10"/>
                 </div>
             </motion.div>
-            <motion.div initial={{ opacity: 0 }}
-                        animate={{ opacity: 1}}
-                        exit={{ opacity: 0}}
-                        transition={{ duration: 0.5 }}
+            <motion.div initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        exit={{opacity: 0}}
+                        transition={{duration: 0.5}}
                         className="h-[calc(100vh-68px)] flex-col items-center justify-between">
                 <h2 className="text-xl font-bold text-center mb-4">Préparer son projet d'orientation</h2>
                 <div>
@@ -108,49 +107,46 @@ const HomePage = () => {
     );
 }
 
-const SearchPage = ({trainings, params}) => {
+const SearchPage = ({trainings}) => {
     const searchParams = useSearchParams();
     const initialQuery = searchParams.get("query") || ""; // Requête depuis l'URL
 
     const [city, setCity] = useState();
-    const [alt, setAlt] = useState(true);
     const [page, setPage] = useState(10);
     const [searchQuery, setSearchQuery] = useState(initialQuery);
-    const [searchResult, setSearchResult] = useState([]);
+    const [searchResult, setSearchResult] = useState(trainings);
 
     useEffect(() => {
         // Recherche initiale basée sur la query string
         if (initialQuery) {
-            handleSearch({ target: { value: initialQuery } });
+            handleSearch({target: {value: initialQuery}});
         }
     }, [initialQuery, trainings]);
 
     const handleSearch = (e) => {
-        const query = e.target.value;
+        const query = e;
         setSearchQuery(query);
         let trainingsFiltered = trainings;
 
         if (city) trainingsFiltered = trainings.filter((training) => training.ville === city);
 
-        const fuse = new Fuse(trainingsFiltered, { keys: ["parcours"], threshold: 0.3 });
+        const fuse = new Fuse(trainingsFiltered, {keys: ["parcours"], threshold: 0.3});
         const results = fuse.search(query);
         setSearchResult(results.map((result) => result.item));
     };
 
     const filter = () => {
-        const filtered = trainings.filter((training) => training.ville === city);
-        setSearchResult(filtered);
+        handleSearch(searchQuery);
     };
 
     return (
         <Section className={"flex gap-2"}>
-
-            {trainings ? <TrainingsFilterCard alt={alt} setAlt={setAlt} city={city} setCity={setCity} filter={filter}
-                                              trainings={trainings}/> : <TrainingsFilterCardSkeleton/>}
+            <TrainingsFilterCard city={city} setCity={setCity} filter={filter}
+                                 trainings={trainings}/>
             <div className="flex flex-col flex-wrap gap-2 w-3/4">
-                <SearchInput searchQuery={searchQuery} onChange={handleSearch}/>
+                <SearchInput searchQuery={searchQuery} onChange={(e) => handleSearch(e.target.value)}/>
                 {searchResult.slice(0, page).map((training, i) => (
-                    <TrainingCard training={training} key={i} />
+                    <TrainingCard training={training} key={i}/>
                 ))}
                 {searchResult.length > page ? (
                     <Button size={"lg"} className={"w-fit mx-auto"} onClick={() => setPage(p => p + 10)}>Voir plus<Plus
@@ -215,7 +211,8 @@ const FAQpage = () => {
                                 En France ou à l'étranger ?
                             </AccordionTrigger>
                             <AccordionContent className="text-gray-300">
-                                Vous pouvez effectuer un master à l'étranger cependant seuls ceux en France sont répertoriés sur notre site.
+                                Vous pouvez effectuer un master à l'étranger cependant seuls ceux en France sont
+                                répertoriés sur notre site.
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
@@ -227,168 +224,169 @@ const FAQpage = () => {
 
 const InformPage = () => {
     const sectionVariants = {
-        hidden: { opacity: 0, y: 10 },
-        visible: { opacity: 1, y: 0 },
+        hidden: {opacity: 0, y: 10},
+        visible: {opacity: 1, y: 0},
     };
 
-    const transitionSettings = { duration: 0.5, ease: "easeInOut" };
+    const transitionSettings = {duration: 0.5, ease: "easeInOut"};
 
     return (
-            <div className="container mx-auto pt-5 px-4 sm:px-6 lg:px-8">
-                <motion.section
-                    initial="hidden"
-                    animate="visible"
-                    transition={transitionSettings}
-                    className="text-center mb-12"
-                >
-                    <h1 className="text-3xl font-bold mb-4 sm:text-4xl text-primary">
-                        Tout savoir sur les Masters en France
-                    </h1>
-                    <p className="text-white text-lg max-w-2xl mx-auto">
-                        Découvrez les clés pour bien comprendre les masters en France, comment
-                        orienter vos choix et utiliser efficacement nos outils pour trouver votre
-                        voie.
-                    </p>
-                </motion.section>
+        <div className="container mx-auto pt-5 px-4 sm:px-6 lg:px-8">
+            <motion.section
+                initial="hidden"
+                animate="visible"
+                transition={transitionSettings}
+                className="text-center mb-12"
+            >
+                <h1 className="text-3xl font-bold mb-4 sm:text-4xl text-primary">
+                    Tout savoir sur les Masters en France
+                </h1>
+                <p className="text-white text-lg max-w-2xl mx-auto">
+                    Découvrez les clés pour bien comprendre les masters en France, comment
+                    orienter vos choix et utiliser efficacement nos outils pour trouver votre
+                    voie.
+                </p>
+            </motion.section>
 
-                <motion.section
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={transitionSettings}
-                    variants={sectionVariants}
-                    className="mb-16"
-                >
-                    <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        1. Comprendre les Masters
-                    </h2>
-                    <div className="flex flex-col sm:flex-row gap-6 items-center">
-                        <div className="flex-1">
-                            <p className="text-white">
-                                Les masters en France sont des diplômes nationaux organisés sur
-                                deux années (M1 et M2). Ils offrent une spécialisation dans de
-                                nombreux domaines, allant des sciences aux arts.
-                            </p>
-                            <p className="text-white mt-4">
-                                Chaque master est conçu pour répondre à des besoins spécifiques du
-                                marché du travail, tout en offrant une opportunité d'approfondir
-                                vos connaissances académiques.
-                            </p>
-                        </div>
-                        <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+            <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{once: true}}
+                transition={transitionSettings}
+                variants={sectionVariants}
+                className="mb-16"
+            >
+                <h2 className="text-2xl font-semibold mb-4 text-primary">
+                    1. Comprendre les Masters
+                </h2>
+                <div className="flex flex-col sm:flex-row gap-6 items-center">
+                    <div className="flex-1">
+                        <p className="text-white">
+                            Les masters en France sont des diplômes nationaux organisés sur
+                            deux années (M1 et M2). Ils offrent une spécialisation dans de
+                            nombreux domaines, allant des sciences aux arts.
+                        </p>
+                        <p className="text-white mt-4">
+                            Chaque master est conçu pour répondre à des besoins spécifiques du
+                            marché du travail, tout en offrant une opportunité d'approfondir
+                            vos connaissances académiques.
+                        </p>
                     </div>
-                </motion.section>
+                    <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+                </div>
+            </motion.section>
 
-                <motion.section
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={transitionSettings}
-                    variants={sectionVariants}
-                    className="mb-16"
-                >
-                    <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        2. Utiliser les Filtres de Recherche
-                    </h2>
-                    <div className="flex flex-col sm:flex-row-reverse gap-6 items-center">
-                        <div className="flex-1">
-                            <p className="text-white">
-                                Notre filtre de recherche vous permet de trouver des masters en
-                                fonction de critères tels que la ville, le domaine d'études, et le
-                                taux d'insertion professionnelle.
-                            </p>
-                            <p className="text-white mt-4">
-                                Essayez différents mots-clés ou utilisez nos suggestions pour
-                                affiner vos résultats et découvrir les masters qui correspondent
-                                à vos aspirations.
-                            </p>
-                        </div>
-                        <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+            <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{once: true}}
+                transition={transitionSettings}
+                variants={sectionVariants}
+                className="mb-16"
+            >
+                <h2 className="text-2xl font-semibold mb-4 text-primary">
+                    2. Utiliser les Filtres de Recherche
+                </h2>
+                <div className="flex flex-col sm:flex-row-reverse gap-6 items-center">
+                    <div className="flex-1">
+                        <p className="text-white">
+                            Notre filtre de recherche vous permet de trouver des masters en
+                            fonction de critères tels que la ville, le domaine d'études, et le
+                            taux d'insertion professionnelle.
+                        </p>
+                        <p className="text-white mt-4">
+                            Essayez différents mots-clés ou utilisez nos suggestions pour
+                            affiner vos résultats et découvrir les masters qui correspondent
+                            à vos aspirations.
+                        </p>
                     </div>
-                </motion.section>
+                    <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+                </div>
+            </motion.section>
 
-                <motion.section
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={transitionSettings}
-                    variants={sectionVariants}
-                    className="mb-16"
-                >
-                    <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        3. Identifier ses Motivations
-                    </h2>
-                    <div className="flex flex-col sm:flex-row gap-6 items-center">
-                        <div className="flex-1">
-                            <p className="text-white">
-                                Trouver ses motivations peut parfois être difficile. Posez-vous
-                                ces questions :
-                            </p>
-                            <ul className="list-disc list-inside mt-4 space-y-2 text-white">
-                                <li>Quels sont mes intérêts personnels et professionnels ?</li>
-                                <li>Quel domaine me passionne le plus ?</li>
-                                <li>Quels objectifs de carrière ai-je à moyen et long terme ?</li>
-                            </ul>
-                        </div>
-                        <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+            <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{once: true}}
+                transition={transitionSettings}
+                variants={sectionVariants}
+                className="mb-16"
+            >
+                <h2 className="text-2xl font-semibold mb-4 text-primary">
+                    3. Identifier ses Motivations
+                </h2>
+                <div className="flex flex-col sm:flex-row gap-6 items-center">
+                    <div className="flex-1">
+                        <p className="text-white">
+                            Trouver ses motivations peut parfois être difficile. Posez-vous
+                            ces questions :
+                        </p>
+                        <ul className="list-disc list-inside mt-4 space-y-2 text-white">
+                            <li>Quels sont mes intérêts personnels et professionnels ?</li>
+                            <li>Quel domaine me passionne le plus ?</li>
+                            <li>Quels objectifs de carrière ai-je à moyen et long terme ?</li>
+                        </ul>
                     </div>
-                </motion.section>
+                    <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+                </div>
+            </motion.section>
 
-                <motion.section
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={transitionSettings}
-                    variants={sectionVariants}
-                    className="mb-16"
-                >
-                    <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        4. Conseils pour Bien S'orienter
-                    </h2>
-                    <div className="flex flex-col sm:flex-row-reverse gap-6 items-center">
-                        <div className="flex-1">
-                            <p className="text-white">
-                                Voici quelques conseils pour faire un choix éclairé :
-                            </p>
-                            <ul className="list-decimal list-inside mt-4 space-y-2 text-white">
-                                <li>Consultez les débouchés professionnels des masters.</li>
-                                <li>Échangez avec des étudiants ou des diplômés pour leur retour
-                                    d'expérience.</li>
-                                <li>Testez vos intérêts avec des stages ou des projets académiques.</li>
-                            </ul>
-                        </div>
-                        <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+            <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{once: true}}
+                transition={transitionSettings}
+                variants={sectionVariants}
+                className="mb-16"
+            >
+                <h2 className="text-2xl font-semibold mb-4 text-primary">
+                    4. Conseils pour Bien S'orienter
+                </h2>
+                <div className="flex flex-col sm:flex-row-reverse gap-6 items-center">
+                    <div className="flex-1">
+                        <p className="text-white">
+                            Voici quelques conseils pour faire un choix éclairé :
+                        </p>
+                        <ul className="list-decimal list-inside mt-4 space-y-2 text-white">
+                            <li>Consultez les débouchés professionnels des masters.</li>
+                            <li>Échangez avec des étudiants ou des diplômés pour leur retour
+                                d'expérience.
+                            </li>
+                            <li>Testez vos intérêts avec des stages ou des projets académiques.</li>
+                        </ul>
                     </div>
-                </motion.section>
+                    <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+                </div>
+            </motion.section>
 
-                <motion.section
-                    initial="hidden"
-                    animate="visible"
-                    transition={transitionSettings}
-                    className="text-center"
-                >
-                    <h3 className="text-xl font-bold mb-4 text-primary">
-                        Besoin d'aide pour votre orientation ?
-                    </h3>
-                    <p className="text-white mb-6">
-                        Utilisez nos outils ou contactez-nous pour un accompagnement personnalisé.
-                    </p>
-                    <button className="px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-primary/80">
-                        Contactez-nous
-                    </button>
-                </motion.section>
-                <FooterHome/>
-            </div>
-);
+            <motion.section
+                initial="hidden"
+                animate="visible"
+                transition={transitionSettings}
+                className="text-center"
+            >
+                <h3 className="text-xl font-bold mb-4 text-primary">
+                    Besoin d'aide pour votre orientation ?
+                </h3>
+                <p className="text-white mb-6">
+                    Utilisez nos outils ou contactez-nous pour un accompagnement personnalisé.
+                </p>
+                <button className="px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-primary/80">
+                    Contactez-nous
+                </button>
+            </motion.section>
+            <FooterHome/>
+        </div>
+    );
 }
 
 const LegalPage = () => {
     const sectionVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 },
+        hidden: {opacity: 0, y: 20},
+        visible: {opacity: 1, y: 0},
     };
 
-    const transitionSettings = { duration: 0.5, ease: "easeInOut" };
+    const transitionSettings = {duration: 0.5, ease: "easeInOut"};
     return (
         <motion.div
             initial="hidden"
@@ -542,11 +540,11 @@ const LegalPage = () => {
 
 const PrivacyPage = () => {
     const sectionVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 },
+        hidden: {opacity: 0, y: 20},
+        visible: {opacity: 1, y: 0},
     };
 
-    const transitionSettings = { duration: 0.5, ease: "easeInOut" };
+    const transitionSettings = {duration: 0.5, ease: "easeInOut"};
     return (
         <motion.div
             initial="hidden"
@@ -557,9 +555,9 @@ const PrivacyPage = () => {
             className="container mx-auto py-10 px-4 sm:px-6 lg:px-8"
         >
             <motion.h1
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
+                initial={{opacity: 0, y: -20}}
+                animate={{opacity: 1, y: 0}}
+                transition={{duration: 0.6, ease: "easeInOut"}}
                 className="text-3xl font-bold text-primary text-center mb-8"
             >
                 Politique de Confidentialité
@@ -568,7 +566,7 @@ const PrivacyPage = () => {
             <motion.section
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{once: true}}
                 transition={transitionSettings}
                 variants={sectionVariants}
                 className="mb-8"
@@ -583,7 +581,7 @@ const PrivacyPage = () => {
             <motion.section
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{once: true}}
                 transition={transitionSettings}
                 variants={sectionVariants}
                 className="mb-8"
@@ -595,7 +593,7 @@ const PrivacyPage = () => {
                     Nous ne collectons actuellement aucune donnée personnelle via ce site.
                     Toutes les interactions sont anonymes et strictement académiques.
                     Cependant, si des formulaires de contact ou d'inscription sont ajoutés
-                    à l'avenir, les données suivantes pourraient être collectées :
+                    à l'avenir, les données suivantes pourraient être collectées :
                 </p>
                 <ul className="list-disc list-inside mt-4 space-y-2 text-white">
                     <li>Nom et prénom</li>
@@ -607,7 +605,7 @@ const PrivacyPage = () => {
             <motion.section
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{once: true}}
                 transition={transitionSettings}
                 variants={sectionVariants}
                 className="mb-8"
@@ -632,7 +630,7 @@ const PrivacyPage = () => {
             <motion.section
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{once: true}}
                 transition={transitionSettings}
                 variants={sectionVariants}
                 className="mb-8"
@@ -643,7 +641,7 @@ const PrivacyPage = () => {
                 <p className="text-white">
                     Nous utilisons des cookies pour améliorer votre expérience sur le site.
                     Les cookies sont de petits fichiers stockés sur votre appareil qui nous
-                    permettent de :
+                    permettent de :
                 </p>
                 <ul className="list-disc list-inside mt-4 space-y-2 text-white">
                     <li>Analyser le trafic et les performances</li>
@@ -658,7 +656,7 @@ const PrivacyPage = () => {
             <motion.section
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{once: true}}
                 transition={transitionSettings}
                 variants={sectionVariants}
                 className="mb-8"
@@ -678,7 +676,7 @@ const PrivacyPage = () => {
             <motion.section
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{once: true}}
                 transition={transitionSettings}
                 variants={sectionVariants}
                 className="mb-8"
@@ -703,7 +701,7 @@ const PrivacyPage = () => {
             <motion.section
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{once: true}}
                 transition={transitionSettings}
                 variants={sectionVariants}
                 className="mb-8"
@@ -740,7 +738,7 @@ const CandidatPage = () => {
             </p>
 
             <CalendarX size={120} className="text-primary mb-6"/>
-            
+
             <p className="text-md text-gray-400">
                 Revenez bientôt pour soumettre votre candidature.
             </p>
