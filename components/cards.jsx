@@ -9,6 +9,7 @@ import {cn, firstLetterUppercase} from "@/lib/utils";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {ArrowRight, Filter} from "lucide-react";
+import {motion} from "framer-motion";
 import {useHover, useHoverDirty} from "react-use";
 import {ApplicationsAcceptedChart, ApplicationsChart} from "@/components/charts";
 
@@ -78,20 +79,50 @@ const TrainingCard = forwardRef(({training}, ref) => {
 
 const MasterInfoCard = forwardRef(({master}, ref) => {
     return (
-        <Card ref={ref}>
-            <CardHeader>
-                <CardTitle>{master.parcours}</CardTitle>
-                <CardDescription>Référence : {master.ifc}</CardDescription>
-            </CardHeader>
-            <CardContent className={"flex flex-col gap-2"}>
-                <span>Etablissement : {master.etablissement}</span>
-                <span>Académie : {master.academie}</span>
-                <span>Emplacement : {master.lieux}</span>
-                <span>Mention : {master.mention}</span>
-                <span>Discipline : {master.discipline}</span>
-                <span>Secteur disciplinaire : {master.secteur_disciplinaire}</span>
-            </CardContent>
-        </Card>
+        <motion.div
+            initial={{opacity: 0, y: 10}}
+            animate={{opacity: 1, y: 0}}
+            transition={{duration: 0.5, ease: "easeInOut"}}
+        >
+            <Card ref={ref} className="shadow-lg bg-black/80 text-white rounded-lg p-6">
+                <CardHeader className="border-b pb-4">
+                    <CardTitle className="text-primary text-2xl font-bold">
+                        {master.parcours}
+                    </CardTitle>
+                    <p className="text-gray-400 mt-2">Référence : {master.ifc}</p>
+                </CardHeader>
+                <CardContent className="flex flex-col gap-3 mt-4">
+                    <div className="flex justify-between">
+                        <span className="font-semibold">Établissement :</span>
+                        <span>{master.etablissement}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="font-semibold">Académie :</span>
+                        <span>{master.academie}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="font-semibold">Emplacement :</span>
+                        <span>{master.lieux}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="font-semibold">Mention :</span>
+                        <span>{master.mention}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="font-semibold">Discipline :</span>
+                        <span>{master.discipline}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="font-semibold">Secteur disciplinaire :</span>
+                        <span>{master.secteur_disciplinaire}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="font-semibold">Capacité :</span>
+                        <span>{master.lastYearApplication.general.capacite}</span>
+                    </div>
+                </CardContent>
+            </Card>
+        </motion.div>
     );
 });
 
