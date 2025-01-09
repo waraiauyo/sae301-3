@@ -8,10 +8,10 @@ import {
 } from "@/components/cards";
 import {TrainingsFilterCardSkeleton} from "@/components/skeletons";
 import {SearchInput} from "@/components/inputs";
-import {ArrowRight, MoveDown, CalendarX} from "lucide-react";
-import {useEffect, useState} from "react";
-import {useSearchParams} from "next/navigation";
-import {useRouter} from "next/navigation";
+import {ArrowRight, MoveDown, CalendarX, GraduationCap, Filter, Lightbulb, Compass} from "lucide-react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
@@ -173,10 +173,31 @@ const MasterPage = ({master}) => {
 
 const FAQpage = () => {
     return (
-        <Section className="h-[calc(100vh-68px)]">
+        <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="h-[calc(100vh-68px)]"
+        >
             <div className="h-screen bg-black text-white flex flex-col items-center justify-center px-4">
-                <h1 className="text-4xl font-bold text-center mb-10">Foire Aux Questions (FAQ)</h1>
-                <div className="w-full max-w-4xl bg-black/40 backdrop-blur-lg p-6 rounded-lg">
+                {/* Header */}
+                <motion.h1
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2, ease: "easeInOut" }}
+                    className="text-4xl font-bold text-center mb-10"
+                >
+                    Foire Aux Questions (FAQ)
+                </motion.h1>
+
+                {/* Accordion Container */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.4, ease: "easeInOut" }}
+                    className="w-full max-w-4xl bg-black/40 backdrop-blur-lg p-6 rounded-lg"
+                >
                     <Accordion type="single" collapsible>
                         <AccordionItem value="item-1">
                             <AccordionTrigger className="text-lg text-white hover:text-primary">
@@ -202,8 +223,7 @@ const FAQpage = () => {
                             </AccordionTrigger>
                             <AccordionContent className="text-gray-300">
                                 Oui, nos données sont actualisées chaque trimestre pour refléter les dernières
-                                statistiques
-                                et offres de formation.
+                                statistiques et offres de formation.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-4">
@@ -216,11 +236,12 @@ const FAQpage = () => {
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
-                </div>
+                </motion.div>
             </div>
-        </Section>
-    )
-}
+            <FooterHome/>
+        </motion.div>
+    );
+};
 
 const InformPage = () => {
     const sectionVariants = {
@@ -231,7 +252,7 @@ const InformPage = () => {
     const transitionSettings = {duration: 0.5, ease: "easeInOut"};
 
     return (
-        <div className="container mx-auto pt-5 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
             <motion.section
                 initial="hidden"
                 animate="visible"
@@ -247,7 +268,6 @@ const InformPage = () => {
                     voie.
                 </p>
             </motion.section>
-
             <motion.section
                 initial="hidden"
                 whileInView="visible"
@@ -272,10 +292,12 @@ const InformPage = () => {
                             vos connaissances académiques.
                         </p>
                     </div>
-                    <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+                    {/* Icon */}
+                    <GraduationCap size={100} className="text-primary flex-1"/>
                 </div>
             </motion.section>
 
+            {/* Section 2: Utiliser les Filtres de Recherche */}
             <motion.section
                 initial="hidden"
                 whileInView="visible"
@@ -288,6 +310,7 @@ const InformPage = () => {
                     2. Utiliser les Filtres de Recherche
                 </h2>
                 <div className="flex flex-col sm:flex-row-reverse gap-6 items-center">
+                    {/* Text Content */}
                     <div className="flex-1">
                         <p className="text-white">
                             Notre filtre de recherche vous permet de trouver des masters en
@@ -300,10 +323,12 @@ const InformPage = () => {
                             à vos aspirations.
                         </p>
                     </div>
-                    <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+                    {/* Icon */}
+                    <Filter size={100} className="text-primary flex-1"/>
                 </div>
             </motion.section>
 
+            {/* Section 3: Trouver ses Motivations */}
             <motion.section
                 initial="hidden"
                 whileInView="visible"
@@ -316,6 +341,7 @@ const InformPage = () => {
                     3. Identifier ses Motivations
                 </h2>
                 <div className="flex flex-col sm:flex-row gap-6 items-center">
+                    {/* Text Content */}
                     <div className="flex-1">
                         <p className="text-white">
                             Trouver ses motivations peut parfois être difficile. Posez-vous
@@ -327,10 +353,12 @@ const InformPage = () => {
                             <li>Quels objectifs de carrière ai-je à moyen et long terme ?</li>
                         </ul>
                     </div>
-                    <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+                    {/* Icon */}
+                    <Lightbulb size={100} className="text-primary flex-1"/>
                 </div>
             </motion.section>
 
+            {/* Section 4: Conseils pour l'Orientation */}
             <motion.section
                 initial="hidden"
                 whileInView="visible"
@@ -343,6 +371,7 @@ const InformPage = () => {
                     4. Conseils pour Bien S'orienter
                 </h2>
                 <div className="flex flex-col sm:flex-row-reverse gap-6 items-center">
+                    {/* Text Content */}
                     <div className="flex-1">
                         <p className="text-white">
                             Voici quelques conseils pour faire un choix éclairé :
@@ -355,25 +384,9 @@ const InformPage = () => {
                             <li>Testez vos intérêts avec des stages ou des projets académiques.</li>
                         </ul>
                     </div>
-                    <div className="flex-1 h-48 bg-gray-200 rounded-md"></div>
+                    {/* Icon */}
+                    <Compass size={100} className="text-primary flex-1"/>
                 </div>
-            </motion.section>
-
-            <motion.section
-                initial="hidden"
-                animate="visible"
-                transition={transitionSettings}
-                className="text-center"
-            >
-                <h3 className="text-xl font-bold mb-4 text-primary">
-                    Besoin d'aide pour votre orientation ?
-                </h3>
-                <p className="text-white mb-6">
-                    Utilisez nos outils ou contactez-nous pour un accompagnement personnalisé.
-                </p>
-                <button className="px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-primary/80">
-                    Contactez-nous
-                </button>
             </motion.section>
             <FooterHome/>
         </div>
