@@ -130,9 +130,11 @@ const SearchPage = ({trainings}) => {
 
         if (city) trainingsFiltered = trainings.filter((training) => training.ville === city);
 
-        const fuse = new Fuse(trainingsFiltered, {keys: ["parcours"], threshold: 0.3});
-        const results = fuse.search(query);
-        setSearchResult(results.map((result) => result.item));
+        if (searchQuery){
+            const fuse = new Fuse(trainingsFiltered, {keys: ["parcours"], threshold: 0.3});
+            const results = fuse.search(query);
+            setSearchResult(results.map((result) => result.item));
+        } else setSearchResult(trainingsFiltered);
     };
 
     const filter = () => {
