@@ -13,12 +13,12 @@ import {motion} from "framer-motion";
 import {useHover, useHoverDirty} from "react-use";
 import {ApplicationsAcceptedChart, ApplicationsChart} from "@/components/charts";
 
-const TrainingsFilterCard = forwardRef(({city, setCity, alt, setAlt, filter, trainings}, ref) => {
+const TrainingsFilterCard = forwardRef(({city, setCity, filter, trainings}, ref) => {
     const citys = getKeyFromObject(trainings, "ville");
 
     return (
         <Card ref={ref}
-              className={cn("w-1/4 h-fit bg-gradient-to-t from-primary/5 to-ground to-20% sticky transition-all top-[calc(68px+1.5rem)]")}>
+              className={cn("w-1/4 h-fit bg-background sticky transition-all top-[calc(68px+1.5rem)]")}>
             <CardHeader>
                 <CardTitle>Filtrer la recherche</CardTitle>
                 <CardDescription>Pour préciser les résultats</CardDescription>
@@ -34,18 +34,6 @@ const TrainingsFilterCard = forwardRef(({city, setCity, alt, setAlt, filter, tra
                             {citys.map((city) => (
                                 <SelectItem value={city}>{firstLetterUppercase(city)}</SelectItem>
                             ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-                <div className={"flex flex-col justify-start gap-1"}>
-                    <Label htmlFor={"select-city"}>Propose alternance</Label>
-                    <Select value={alt} onValueChange={(v) => setAlt(v)}>
-                        <SelectTrigger disabled id={"select-city"}>
-                            <SelectValue placeholder="Choisir alternance"/>
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value={true}>Oui</SelectItem>
-                            <SelectItem value={false}>Non</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
