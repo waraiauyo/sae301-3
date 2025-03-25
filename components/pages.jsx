@@ -59,7 +59,7 @@ const HomePage = () => {
                         exit={{opacity: 0}}
                         transition={{duration: 0.5}}
                         className="h-[calc(100vh-68px)] flex-col items-center justify-between">
-                <h2 className="text-xl font-bold text-center mb-4">Quel master après ma license ?</h2>
+                <h2 className="text-xl font-bold text-center mb-4">Quel master après la license ?</h2>
                 <div className="flex gap-20 text-start">
                     <article
                         className="text-pretty basis-1/3 blurtext mt-[50px] bg-black/40 backdrop-blur-lg relative z-10 rounded-sm justify-center  p-2">
